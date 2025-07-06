@@ -119,14 +119,14 @@
   .userdetails-cnt {
     width: 100%;
     display: flex;
-    gap: 24px; 
+    gap: 60px; 
   }
   
   .username-cnt,
   .contactno-cnt {
     display: flex;
     flex-direction: column;
-    width: 50%; 
+    width: 60%; 
   }
   .otp-field {
     width: 100%;
