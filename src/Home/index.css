@@ -1,0 +1,48 @@
+.homepg-body{
+    width: 100%;
+    height: 100vh;
+    background-color: #F7F8FA;
+}
+.homepage-header{
+    width: 100%;
+    height: 5vh;
+    background-color: gray;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.cname-head{
+    color: white;
+    font-size: x-large;
+    font-weight: 600;
+}
+
+.logout{
+    width: 80px;
+    height: 40px;
+    background-color: white;
+    border: none;
+    color: black;
+    margin-right: 40px;
+    cursor: pointer;
+}
+.bdy-cnt{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcomehome-msg{
+    font-size: 55px;
+    font-weight: bolder;
+    margin-bottom: 10px;
+}
+
+.msgcnt{
+    font-size: 24px;
+    font-weight: bold;
+    color: gray;
+}
