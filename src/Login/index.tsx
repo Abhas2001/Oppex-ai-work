@@ -16,6 +16,7 @@ const Login = () => {
     const[invalidmsg,setinvalidmsg] = useState(false);
     const[passinvalidmsg,setpassinvalidmsg] = useState(false);
     const [emailTouched, setEmailTouched] = useState(false);
+    const[passverified,setpassverified] = useState(false)
 
 
 
@@ -31,26 +32,34 @@ const Login = () => {
     const handleloginpass = (val:string) =>{
              setloginpass(val)
     }
-    const handleSignin = () =>{
-        
-        if(isuserverified){
-        navigate("/home")
-        }
-        else{
+    const handleSignin = () => {
+        handleuserverified();
+      
+        if (isuserverified) {
+          navigate("/home");
+          setisuserLoggedin(true);
+        } else {
           setshowerrortoast(true);
         }
-        setisuserLoggedin(true);
-    }
-
-    const handleuserverified = () =>{
-        if(logindata.some((user:any)=> (user.email === loginemail && user.password === loginpass))){
-            setisuserverified(true);
-            
+      };
+      
+    const handleuserverified = () => {
+        const user = logindata.find((user: any) => user.email === loginemail);
+      
+        if (!user) {
+          
+          setisuserverified(false);
+          setpassverified(true); 
+        } else if (user.password !== loginpass) {
+        
+          setisuserverified(false);
+          setpassverified(false); 
+        } else {
+         
+          setisuserverified(true);
         }
-        else{
-            setisuserverified(false);
-        }
-    }
+      };
+      
 
     useEffect(()=>{
 
@@ -116,22 +125,23 @@ const Login = () => {
                 <section className='password-cnt'>
                     <span>Enter your Password</span>
                     <input onChange={(e)=>handleloginpass(e.currentTarget.value)} placeholder='password' className='password-input' type="password" />
-                    {passinvalidmsg&&
-                    <span className='fieldemailerror'>Password Length must be greater than or equal to 8</span>
-}
+
                 </section>
                 <section className='Signin-btn-cnt'>
                 <button onClick={()=>handleSignin()} className='signin-btn'> <span className='signin-txt'>Sign in</span> </button>
 
     
             </section>
-            {showerrortoast&&
-    <section className='error-toast'>
+            {showerrortoast && 
+  <section className='error-toast'>
     <div className='error-msg'>
-        Your email is not validated please validate you email,please sign up
+      {!passverified 
+        ? 'Incorrect password. Please try again' 
+        : 'Your email is not verified. Please sign up'}
     </div>
-    </section>
+  </section>
 }
+
             </section>
 
          

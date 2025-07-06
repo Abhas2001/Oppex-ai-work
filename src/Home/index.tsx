@@ -22,7 +22,7 @@ const username = currentUser?.username || '';
     </div>
   <div>
     
-    <button onClick={()=>handleLogout()} className='logout'>
+    <button  onClick={()=>handleLogout()} className='logout'>
     &#8594; Logout 
     </button>
     </div>
