@@ -13,6 +13,8 @@ const Signup = () => {
     const[firstname,setfirstname] = useState('');
     const[lastname,setlastname] = useState('');
     const[invalidmsg,setinvalidmsg] = useState(false);
+    const[passinvalidmsg,setpassinvalidmsg] = useState(false);
+    const [emailTouched, setEmailTouched] = useState(false);
     const navigate = useNavigate()
 
 const handleshowsignin = () =>{
@@ -29,7 +31,7 @@ const handleshowsignin = () =>{
       const handlesignup = () =>{
         console.log("gotohome");
         
-        setlogindata((prev:any)=>[...prev,{email:signupemail,password:signuppassword}])
+        setlogindata((prev:any)=>[...prev,{email:signupemail,password:signuppassword,username:firstname}])
         navigate("/home")
       }
 
@@ -44,8 +46,17 @@ const handleshowsignin = () =>{
         if(signupemail.length>0){
         setinvalidmsg(!validateEmail(signupemail))
         }
+        else{
+            setinvalidmsg(false);
+        }
+        if(signuppassword.length<8 && signuppassword.length>0){
+            setpassinvalidmsg(true);
+          }
+          else{
+            setpassinvalidmsg(false)
+          }
       
-      },[signupemail])
+      },[signupemail,signuppassword])
  
       useEffect(()=>{
         setfirstname('');
@@ -84,8 +95,8 @@ const handleshowsignin = () =>{
     
                     <section className='email-cnt'>
                         <span>Enter your email address</span>
-                        <input value={signupemail} onChange={(e)=>handleemail(e.currentTarget.value)} placeholder='email address' className='email-input' type="text" />
-                        {invalidmsg?
+                        <input  onBlur={() => setEmailTouched(true)} value={signupemail} onChange={(e)=>{setEmailTouched(false);handleemail(e.currentTarget.value)}} placeholder='email address' className='email-input' type="text" />
+                        {invalidmsg && emailTouched?
                     <span className='fieldemailerror'>Invalid Email!</span>
                     :
                     null
@@ -109,6 +120,9 @@ const handleshowsignin = () =>{
                     <section className='password-cnt'>
                         <span>Enter your Password</span>
                         <input onInput={(e)=>handlepassword(e.currentTarget.value)} placeholder='password' className='password-input' type="password" />
+                        {passinvalidmsg&&
+                    <span className='fieldemailerror'>Password Length must be greater than or equal to 8</span>
+}
                     </section>
                     <section className='Signin-btn-cnt'>
                     <button onClick={()=>handlesignup()} className='signin-btn'> <span className='signin-txt'>Sign Up</span> </button>

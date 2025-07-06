@@ -7,14 +7,16 @@ import { validateEmail } from '../utils/validateEmail';
 import './index.css'
 const Login = () => {
    
-    const {setisuserLoggedin,logindata} = useContext(usercontext);
+    const {setisuserLoggedin,logindata,setloginemail,loginemail} = useContext(usercontext);
     const navigate = useNavigate()
-    const[loginemail,setloginemail] = useState('');
+    
     const[loginpass,setloginpass] = useState('');
     const[isuserverified,setisuserverified] = useState(false);
     const[showerrortoast,setshowerrortoast] = useState(false);
     const[invalidmsg,setinvalidmsg] = useState(false);
     const[passinvalidmsg,setpassinvalidmsg] = useState(false);
+    const [emailTouched, setEmailTouched] = useState(false);
+
 
 
     
@@ -56,7 +58,10 @@ const Login = () => {
         if(loginemail.length>0){
   setinvalidmsg(!validateEmail(loginemail));
         }
-    
+        else{
+            setinvalidmsg(false);
+        }
+      
       if(loginpass.length<8 && loginpass.length>0){
         setpassinvalidmsg(true);
       }
@@ -99,8 +104,8 @@ const Login = () => {
 
                 <section className='email-cnt'>
                     <span>Enter your email address</span>
-                    <input onInput={(e)=>handleloginemail(e.currentTarget.value)} placeholder='email address' className='email-input' type="text" />
-                    {invalidmsg?
+                    <input   onBlur={() => setEmailTouched(true)} onInput={(e)=>{setEmailTouched(false);handleloginemail(e.currentTarget.value)}} placeholder='email address' className='email-input' type="text" />
+                    {invalidmsg&&emailTouched?
                     <span className='fieldemailerror'>Invalid Email!</span>
                     :
                     null

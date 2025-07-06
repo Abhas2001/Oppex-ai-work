@@ -20,9 +20,9 @@
 .logout{
     width: 80px;
     height: 40px;
-    background-color: white;
+    background-color: gray;
     border: none;
-    color: black;
+    color: white;
     margin-right: 40px;
     cursor: pointer;
 }
@@ -33,6 +33,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+.username{
+    color: white;
+    font-size: 15px;
+    margin-right: 0px;
 }
 
 .welcomehome-msg{

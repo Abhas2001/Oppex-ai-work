@@ -1,6 +1,6 @@
 
  import * as React from 'react';
-import { createContext, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import { BrowserRouter } from 'react-router-dom';
 
 
@@ -11,26 +11,39 @@ interface UserContextType {
   showsignup: boolean;
   isuserLoggedin:boolean;
   logindata:any;
+  loginemail:string;
   setshowsignup: React.Dispatch<React.SetStateAction<boolean>>;
   setisuserLoggedin: React.Dispatch<React.SetStateAction<boolean>>;
   setlogindata:React.Dispatch<React.SetStateAction<any>>;
+  setloginemail:React.Dispatch<React.SetStateAction<any>>;
 }
 export const usercontext = createContext<UserContextType>({
   showsignup: false,
   isuserLoggedin:false,
   logindata:[],
+  loginemail:'',
   setisuserLoggedin:()=>{},
   setshowsignup: () => {},
-  setlogindata: ()=> {}
+  setlogindata: ()=> {},
+  setloginemail: ()=> {}
 });
 function App() {
   const[showsignup,setshowsignup] = useState(false);
  const [isuserLoggedin,setisuserLoggedin] = useState(false);
- const[logindata,setlogindata] = useState<{ email: string; password: string }[]>([])
+ const[loginemail,setloginemail] = useState('');
+ const [logindata, setlogindata] = useState<{ email: string; password: string; username:string}[]>(() => {
+  const storedData = sessionStorage.getItem('logindata');
+  return storedData ? JSON.parse(storedData) : [];
+});
+
+
+ useEffect(() => {
+  sessionStorage.setItem('logindata', JSON.stringify(logindata));
+}, [logindata]);
 
   return (
     <>
-    <usercontext.Provider value={{ showsignup, setshowsignup,isuserLoggedin,setisuserLoggedin,logindata,setlogindata }}>
+    <usercontext.Provider value={{ showsignup, setshowsignup,isuserLoggedin,setisuserLoggedin,logindata,setlogindata,loginemail,setloginemail }}>
       <BrowserRouter>
         <Navigation />
       </BrowserRouter>
