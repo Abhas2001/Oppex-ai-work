@@ -7,6 +7,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
   }
   .Login-Form{
     width: 540px;
@@ -14,6 +15,8 @@
     background-color: white;
     box-shadow: black;
     border-radius: 20px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
   }
   .Loginform-header{
     display: flex;
@@ -61,6 +64,7 @@
     font-weight: normal;
     font-size: 15px;
     color: #0089ED;
+
   }
 
   .Signin-form{
@@ -104,6 +108,8 @@
     border: 1px solid #0089ED;
     padding: 10px;
     border-radius: 10px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
   }
   .signin-txt{
     color: #FFFFFF;
@@ -113,13 +119,34 @@
   .userdetails-cnt {
     width: 100%;
     display: flex;
-    gap: 24px; /* optional spacing between inputs */
+    gap: 24px; 
   }
   
   .username-cnt,
   .contactno-cnt {
     display: flex;
     flex-direction: column;
-    width: 50%; /* ensure both take equal space */
+    width: 50%; 
   }
-  
+  .otp-field {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .otp-field input {
+    text-align: center;
+    font-size: 18px;
+    letter-spacing: 4px;
+  }
+  .signin-otp-btn{
+    width: 50%;
+    background-color: #0089ED;
+    border: 1px solid #0089ED;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
