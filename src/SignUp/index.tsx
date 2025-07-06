@@ -16,6 +16,7 @@ const Signup = () => {
     const[passinvalidmsg,setpassinvalidmsg] = useState(false);
     const [emailTouched, setEmailTouched] = useState(false);
     const [otpdata, setotpdata] = useState<{ otp: string } | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const [showOtpField, setshowOtpField] = useState(false);
 const [enteredOtp, setenteredOtp] = useState('');
@@ -40,6 +41,7 @@ const handleshowsignin = () =>{
     }
 
     const sendOTP = async (email: string) => {
+        setIsLoading(true);
         try {
           const response = await fetch("https://oppex-ai-backend.onrender.com/send-otp", {
             method: "POST",
@@ -55,6 +57,9 @@ const handleshowsignin = () =>{
         } catch (error) {
           console.error("Error sending OTP:", error);
         }
+        finally {
+            setIsLoading(false);
+          }
       };
       
 
@@ -113,7 +118,11 @@ const handleshowsignin = () =>{
       
     
     return (
+        <>
+          
+      
         <div className="login-wrapper">
+       
   <section className="Login-Form">
   {!showOtpField && (
     <section className="Loginform-header">
@@ -217,10 +226,14 @@ const handleshowsignin = () =>{
               </span>
             )}
           </section>
-
+         
           <section className="Signin-btn-cnt">
             <button onClick={handlesignup} className="signin-btn">
-              <span className="signin-txt">Sign Up</span>
+            {isLoading ? (
+      <span className="loaderexp"><div className="loader"></div></span>
+    ) : (
+      <span className="signin-txt">Sign Up</span>
+    )}
             </button>
           </section>
         </>
@@ -228,6 +241,7 @@ const handleshowsignin = () =>{
     </section>
   </section>
 </div>
+</>
 
       )
 }

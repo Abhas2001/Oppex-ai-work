@@ -153,3 +153,23 @@
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05);
   }
+  .loader {
+    border: 6px solid #f3f3f3; /* Light grey */
+    border-top: 6px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .loaderexp{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
