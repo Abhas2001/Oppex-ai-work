@@ -115,6 +115,7 @@ const handleshowsignin = () =>{
     return (
         <div className="login-wrapper">
   <section className="Login-Form">
+  {!showOtpField && (
     <section className="Loginform-header">
       <div className="lgn-head">
         <div className="Login-header">
@@ -131,12 +132,18 @@ const handleshowsignin = () =>{
         </button>
       </div>
     </section>
+  )
+}
 
     <section className="Signin-form">
       
     
       {showOtpField && (
         <section className="otp-field">
+             <div className="Login-header">
+        
+          <span className="c-name">OPPEX-AI</span>
+        </div>
           <span>Enter OTP sent to your email</span>
           <input
             value={enteredOtp}
