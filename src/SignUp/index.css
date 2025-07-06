@@ -166,6 +166,11 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+  .fieldemailerror{
+    font-size: 14px;
+    color: red;
+    height: 1px;
+  }
 
   .loaderexp{
     width: 100%;
