@@ -32,13 +32,13 @@ function App() {
  const [isuserLoggedin,setisuserLoggedin] = useState(false);
  const[loginemail,setloginemail] = useState('');
  const [logindata, setlogindata] = useState<{ email: string; password: string; username:string}[]>(() => {
-  const storedData = sessionStorage.getItem('logindata');
+  const storedData = localStorage.getItem('logindata');
   return storedData ? JSON.parse(storedData) : [];
 });
 
 
  useEffect(() => {
-  sessionStorage.setItem('logindata', JSON.stringify(logindata));
+  localStorage.setItem('logindata', JSON.stringify(logindata));
 }, [logindata]);
 
   return (
