@@ -1,11 +1,12 @@
 
  import * as React from 'react';
 import { createContext, useEffect, useState } from 'react'
-import { BrowserRouter } from 'react-router-dom';
+
 
 
 import './App.css'
-import Navigation from './Navigation';
+
+
 
 interface UserContextType {
   showsignup: boolean;
@@ -28,26 +29,90 @@ export const usercontext = createContext<UserContextType>({
   setloginemail: ()=> {}
 });
 function App() {
-  const[showsignup,setshowsignup] = useState(false);
- const [isuserLoggedin,setisuserLoggedin] = useState(false);
- const[loginemail,setloginemail] = useState('');
- const [logindata, setlogindata] = useState<{ email: string; password: string; username:string}[]>(() => {
-  const storedData = localStorage.getItem('logindata');
-  return storedData ? JSON.parse(storedData) : [];
-});
+//   const[showsignup,setshowsignup] = useState(false);
+//  const [isuserLoggedin,setisuserLoggedin] = useState(false);
+//  const[loginemail,setloginemail] = useState('');
+//  const [logindata, setlogindata] = useState<{ email: string; password: string; username:string}[]>(() => {
+//   const storedData = localStorage.getItem('logindata');
+//   return storedData ? JSON.parse(storedData) : [];
+// });
 
 
- useEffect(() => {
-  localStorage.setItem('logindata', JSON.stringify(logindata));
-}, [logindata]);
+//  useEffect(() => {
+//   localStorage.setItem('logindata', JSON.stringify(logindata));
+// }, [logindata]);
+const[flag,setflag] = useState(false);  
+const[message,setmessage] = useState<string>(''); 
+const[data,setdata] = useState<any>([]);
+const[id,setid] = useState(0);
+
+async function getdata(){
+const response = await fetch(`http://localhost:5000/qoutes?limit=${id}`)
+console.log(response);
+
+const data = await response.json();
+setdata(data);
+}
+
+useEffect(()=>{
+  console.log(data);
+},[data])
+
+   
+
+useEffect(() => {
+  console.log("Flag value changed:", flag);
+}, [flag]);
+
+useEffect(() => {
+  if (id === 0) {
+    return; // Prevent initial fetch when id is 0
+  }
+  getdata();      
+}, [id]);
+
+const handlesenddata = () => {
+  setid(id + 1);
+
+  console.log("jshdgkdhkjsh");
+  setflag(true);
+
+  console.log(flag);
+}
+
+const handlesenddatamessage = (name:string) =>{
+
+  
+  setmessage(name);
+  console.log(message);
+
+}
 
   return (
     <>
-    <usercontext.Provider value={{ showsignup, setshowsignup,isuserLoggedin,setisuserLoggedin,logindata,setlogindata,loginemail,setloginemail }}>
+    {/* <usercontext.Provider value={{ showsignup, setshowsignup,isuserLoggedin,setisuserLoggedin,logindata,setlogindata,loginemail,setloginemail }}>
       <BrowserRouter>
         <Navigation />
       </BrowserRouter>
-    </usercontext.Provider>
+    </usercontext.Provider> */}
+
+
+    <div>
+    <div>
+      {
+        data.map((item:any) => {
+          return (
+            <div key={item.id}>
+              <h1>{item.text}</h1>
+             
+            </div>
+          )
+        })
+      }
+    </div>
+    <input onChange={(e)=>handlesenddatamessage(e.currentTarget.value)} type="text" />
+    <button onClick={handlesenddata}>Click Me</button>
+    </div>
     </>
   )
 }
