@@ -47,7 +47,7 @@ const[data,setdata] = useState<any>([]);
 const[id,setid] = useState(0);
 
 async function getdata(){
-const response = await fetch(`http://localhost:5000/qoutes?limit=${id}`)
+const response = await fetch(`https://oppex-ai-backend.onrender.com/qoutes/?limit=${id}`)
 console.log(response);
 
 const data = await response.json();
