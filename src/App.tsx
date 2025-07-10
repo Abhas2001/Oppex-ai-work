@@ -1,10 +1,13 @@
 
  import * as React from 'react';
-import { createContext, useEffect, useState } from 'react'
+import { createContext,  useState } from 'react'
 
 
 
 import './App.css'
+
+
+
 
 
 
@@ -41,52 +44,48 @@ function App() {
 //  useEffect(() => {
 //   localStorage.setItem('logindata', JSON.stringify(logindata));
 // }, [logindata]);
-const[flag,setflag] = useState(false);  
-const[message,setmessage] = useState<string>(''); 
-const[data,setdata] = useState<any>([]);
-const[id,setid] = useState(0);
 
-async function getdata(){
-const response = await fetch(`https://oppex-ai-backend.onrender.com/qoutes/?limit=${id}`)
-console.log(response);
+const [loginemail, setloginemail] = useState('');
+const [loginpassword, setloginpassword] = useState('');
 
-const data = await response.json();
-setdata(data);
+const[loginemaildata,setloginemaildata] = useState<{email: string}[]>([]);
+
+
+const handleLoginemail = (email:string) =>{
+  setloginemail(email);
+}
+const handleLoginpassword = (password:string) =>{
+  setloginpassword(password);
 }
 
-useEffect(()=>{
-  console.log(data);
-},[data])
+const apiUrl = 'http://localhost:5000'; // Replace with your actual API URL
+const handleLogin = async() => {
+  const response  =  await fetch('http://localhost:5000/login',{
+    method:'POST',
+    headers:{
+      'Content-Type': 'application/json'
+    },
 
-   
-
-useEffect(() => {
-  console.log("Flag value changed:", flag);
-}, [flag]);
-
-useEffect(() => {
-  if (id === 0) {
-    return; // Prevent initial fetch when id is 0
-  }
-  getdata();      
-}, [id]);
-
-const handlesenddata = () => {
-  setid(id + 1);
-
-  console.log("jshdgkdhkjsh");
-  setflag(true);
-
-  console.log(flag);
-}
-
-const handlesenddatamessage = (name:string) =>{
+    body: JSON.stringify({
+       email : loginemail,
+        password:loginpassword // replace with actual password input  
+    })
+ 
+  })
 
   
-  setmessage(name);
-  console.log(message);
 
+  console.log(response);
+  
 }
+
+const handlegetlogindata = async() =>{
+
+    const loginres = await fetch(`${apiUrl}/getlogindata`)
+    const data = await loginres.json();
+  setloginemaildata(data);
+      
+  }
 
   return (
     <>
@@ -98,20 +97,26 @@ const handlesenddatamessage = (name:string) =>{
 
 
     <div>
-    <div>
-      {
-        data.map((item:any) => {
-          return (
-            <div key={item.id}>
-              <h1>{item.text}</h1>
-             
-            </div>
-          )
-        })
-      }
-    </div>
-    <input onChange={(e)=>handlesenddatamessage(e.currentTarget.value)} type="text" />
-    <button onClick={handlesenddata}>Click Me</button>
+    <span>email</span>
+ <input onChange={(e)=>handleLoginemail(e.target.value)} type="text" />
+<span>password</span>
+ <input onChange={(e)=>handleLoginpassword(e.target.value)} type="text" name="" id="" />
+
+ <button onClick={handleLogin}>Login</button>
+
+ <button onClick={handlegetlogindata}>getlogindata</button>
+
+
+ <div>
+  { loginemaildata.map((x)=>{
+    return(
+       
+  <span>{x.email?x.email:''}</span>
+    )
+  })
+
+ 
+   } </div>
     </div>
     </>
   )
